@@ -13,6 +13,7 @@ export default function Search() {
   const [isMetric, setIsMetric] = useState(true);
   const [suggestionsShown, setSuggestionsShown] = useState(false);
   const [resultsLoading, setResultsLoading] = useState(false);
+  const [resultsError, setResultsError] = useState(false);
   const [autocompleteResults, setAutocompleteResults] = useState(null);
 
   useEffect(() => {
@@ -54,6 +55,7 @@ export default function Search() {
   function handleSearch(event: any) {
     event.preventDefault();
     setResultsLoading(true);
+    setResultsError(false);
     fetch(`http://api.weatherapi.com/v1/forecast.json?key=${process.env.NEXT_PUBLIC_WEATHER_API_KEY}&q=${query}&days=6&aqi=no&alerts=no`)
       .then(response => response.json())
       .then(data => {
@@ -62,11 +64,18 @@ export default function Search() {
           data.forecast.forecastday = data.forecast.forecastday.slice(1, 6);
           setResults(data);
           setResultsLoading(false);
+          setResultsError(false);
         } else {
           setResults({});
+          setResultsLoading(false);
+          setResultsError(true);
         }
       })
-      .catch(error => console.error(error));
+      .catch(error => {
+        setResultsLoading(false);
+        setResultsError(true);
+        console.error(error);
+      });
   }
 
   function selectQuery(event, result) {
@@ -139,8 +148,12 @@ export default function Search() {
                 </button>
               </div>
             </form>
-            {resultsLoading && <img className='m-x-auto' src='/images/loader.gif'></img>}
-            {results && results.current && <div>
+            {resultsError && <div className='position-absolute top-25 start-0 w-100 text-center'>
+              <h2 className='w-100'>Oops, we encountered an issue processing your search, please try again later!</h2>
+              <img src='/images/error.gif'></img>
+            </div>}
+            {resultsLoading && <img className='position-absolute top-0 start-0 w-100' src='/images/loader.gif'></img>}
+            {!resultsLoading && !resultsError && results && results.current && <div>
               <ul className="nav nav-pills w-100 mb-3">
                 <li className="nav-item w-50 text-center" onClick={changeToMetric}>
                   <a className={`nav-link ${isMetric ? 'active' : ''}`} aria-current="page" href="#">Metric (°C/Km)</a>
@@ -151,7 +164,7 @@ export default function Search() {
               </ul>
               <CurrentWeather weatherData={results.current} isMetric={isMetric} />
             </div>}
-            {results.forecast && results.forecast.forecastday.length > 0 && <ForecastResults results={results.forecast.forecastday} isMetric={isMetric} />}
+            {!resultsLoading && !resultsError && results.forecast && results.forecast.forecastday.length > 0 && <ForecastResults results={results.forecast.forecastday} isMetric={isMetric} />}
 
           </div>
         </div>
