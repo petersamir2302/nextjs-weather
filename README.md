@@ -8,7 +8,9 @@ and type any location , zipcode or coordinates in the search bar it will autocom
 There are 3 main components in this app :
 
 1-index.tsx : which is the root route and main search page that includes all other components in it we call the api to autocomplete whenever the user enters something in the searchbar and the api to get the weather data for that location he choose from autocomplete or entered manually (query) and also has isMetric which defines to use metric or imperial in the results shown and both get passed as props to the other components to use them.
+
 2-currentWeather.tsx: which is a component that takes the weatherData and isMetric as props and only purpose is to render today's weather condition , temprature , wind speed , UV, feels like temprature and humidity.
+
 3-forecastResults.tsx: which is a component that takes the weatherData and isMetric as props and only purpuse is to render the forecast for the next 5 days including the condition , max-temprature and min-temprature.
 
 There's a loader shown with animation with each api call
