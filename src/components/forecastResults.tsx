@@ -1,6 +1,25 @@
 import React from 'react';
 
-const ForecastResults = ({ results, isMetric }) => {
+interface Result {
+  date: string;
+  day: {
+    condition: {
+      text: string;
+      icon: string;
+    };
+    maxtemp_c: number;
+    maxtemp_f: number;
+    mintemp_c: number;
+    mintemp_f: number;
+  };
+}
+
+interface Props {
+  results: Result[];
+  isMetric: boolean;
+}
+
+const ForecastResults = ({ results, isMetric }: Props) => {
   return (
     <div className="row row-cols-1 row-cols-md-3 g-4">
       {results.map((result, index) => (

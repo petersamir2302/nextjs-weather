@@ -1,38 +1,30 @@
 This is a [Next.js](https://nextjs.org/) project bootstrapped with [`create-next-app`](https://github.com/vercel/next.js/tree/canary/packages/create-next-app).
 
+## User guideline
+This app functions as weather forecast app so all you need to do is go to app url (default: localhost:3000)
+and type any location , zipcode or coordinates in the search bar it will autocomplete for you then you choose one of the autocomplete results or hit search or enter and it will get the current weather conditions for this location and the forecast for the next 5 days with cool background that represents the weather condition for some conditions
+
+## Developer guideline
+There are 3 main components in this app :
+
+1-index.tsx : which is the root route and main search page that includes all other components in it we call the api to autocomplete whenever the user enters something in the searchbar and the api to get the weather data for that location he choose from autocomplete or entered manually (query) and also has isMetric which defines to use metric or imperial in the results shown and both get passed as props to the other components to use them.
+2-currentWeather.tsx: which is a component that takes the weatherData and isMetric as props and only purpose is to render today's weather condition , temprature , wind speed , UV, feels like temprature and humidity.
+3-forecastResults.tsx: which is a component that takes the weatherData and isMetric as props and only purpuse is to render the forecast for the next 5 days including the condition , max-temprature and min-temprature.
+
+There's a loader shown with animation with each api call
+
+There's error handling animation shown when any api call fails
+
+Each component has scss file that compiles to css using command 'sass --watch src/styles/scss:src/styles/css' but you don't need to run it everytime you run the app only if you need to edit scss files
+
+
 ## Getting Started
 
 First, run the development server:
 
 ```bash
 npm run dev
-# or
-yarn dev
-# or
-pnpm dev
 ```
 
 Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
 
-You can start editing the page by modifying `pages/index.tsx`. The page auto-updates as you edit the file.
-
-[API routes](https://nextjs.org/docs/api-routes/introduction) can be accessed on [http://localhost:3000/api/hello](http://localhost:3000/api/hello). This endpoint can be edited in `pages/api/hello.ts`.
-
-The `pages/api` directory is mapped to `/api/*`. Files in this directory are treated as [API routes](https://nextjs.org/docs/api-routes/introduction) instead of React pages.
-
-This project uses [`next/font`](https://nextjs.org/docs/basic-features/font-optimization) to automatically optimize and load Inter, a custom Google Font.
-
-## Learn More
-
-To learn more about Next.js, take a look at the following resources:
-
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
-
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js/) - your feedback and contributions are welcome!
-
-## Deploy on Vercel
-
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
-
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/deployment) for more details.
