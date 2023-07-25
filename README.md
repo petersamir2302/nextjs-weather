@@ -17,7 +17,11 @@ There's a loader shown with animation with each api call
 
 There's error handling animation shown when any api call fails
 
-Each component has scss file that compiles to css using command 'sass --watch src/styles/scss:src/styles/css' but you don't need to run it everytime you run the app only if you need to edit scss files
+Each component has scss file that compiles to css using command 
+```bash
+sass --watch src/styles/scss:src/styles/css
+```
+but you don't need to run it everytime you run the app only if you need to edit scss files
 
 
 ## Getting Started
